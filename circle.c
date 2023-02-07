@@ -5,4 +5,8 @@ typedef struct point{
 	int y;
 }point;
 
+typedef struct circle{
+	struct point centre;
+	int radius;
+}circle;
 
