@@ -25,3 +25,12 @@ _Bool inputError(int argc)
     }
     return 0;
 }
+
+_Bool readError(char* argv[])
+{
+    if (fopen(argv[1], "r") == NULL) {
+        printf(RED_COLOR "Error: " DEFOLT_COLOR "can't read the file\n");
+        return 1;
+    }
+    return 0;
+}
