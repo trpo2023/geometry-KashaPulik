@@ -37,5 +37,6 @@ _Bool readError(char* argv[])
 
 int main(int argc, char* argv[])
 {
-	
+    if (inputError(argc))
+        exit(1);
 }
