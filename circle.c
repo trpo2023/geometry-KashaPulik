@@ -39,4 +39,13 @@ int main(int argc, char* argv[])
 {
     if (inputError(argc))
         exit(1);
+
+    FILE* geomInput;
+    char text[80];
+
+    if (readError(argv))
+        exit(1);
+
+    geomInput = fopen(argv[1], "r");
+    fscanf(geomInput, "%c", text);
 }
