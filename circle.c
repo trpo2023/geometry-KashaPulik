@@ -34,3 +34,8 @@ _Bool readError(char* argv[])
     }
     return 0;
 }
+
+int main(int argc, char* argv[])
+{
+	
+}
