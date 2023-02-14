@@ -29,13 +29,12 @@ Node* getLast (Node *head)
 	return head;
 }
 
-void shift (Node *head, int value)
+void push(Node **head, int number)
 {
-	Node *last = getlast(head);
 	Node *tmp = (Node*) malloc(sizeof(Node));
-	tmp->value = value;
-	tmp->next = NULL;
-	last->next = tmp;
+	tmp->lineNumber = number;
+	tmp->next = (*head);
+	(*head) = tmp;
 }
 
 _Bool inputError(int argc)
@@ -60,11 +59,13 @@ _Bool readError(char* argv[])
     return 0;
 }
 
-void readFile(FILE *file)
+Node *readFile(FILE *file)
 {
-	int i;
-	char str[80];
-	
+	Node *strings = NULL;
+	int i = 0;
+	do {
+		push(&strings, i);
+		while ((strings->str[j] = fgetc(file)) != /n)
 }
 
 int main(int argc, char* argv[])
