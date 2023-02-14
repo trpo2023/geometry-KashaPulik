@@ -4,13 +4,13 @@
 #define DEFOLT_COLOR "\x1b[0m"
 
 typedef struct point {
-    int x;
-    int y;
+    double x;
+    double y;
 } point;
 
 typedef struct circle {
     struct point centre;
-    int radius;
+    double radius;
 } circle;
 
 _Bool inputError(int argc)
