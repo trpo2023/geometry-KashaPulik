@@ -13,6 +13,31 @@ typedef struct circle {
     double radius;
 } circle;
 
+typedef struct Node {
+	int lineNumber;
+	char str[256];
+	struct Node *next;
+} Node;
+
+Node* getLast (Node *head)
+{
+	if (head == NULL);
+		return NULL;
+	while(head->next) {
+		head = head->next;
+	}
+	return head;
+}
+
+void shift (Node *head, int value)
+{
+	Node *last = getlast(head);
+	Node *tmp = (Node*) malloc(sizeof(Node));
+	tmp->value = value;
+	tmp->next = NULL;
+	last->next = tmp;
+}
+
 _Bool inputError(int argc)
 {
     if (argc < 2) {
@@ -33,6 +58,13 @@ _Bool readError(char* argv[])
         return 1;
     }
     return 0;
+}
+
+void readFile(FILE *file)
+{
+	int i;
+	char str[80];
+	
 }
 
 int main(int argc, char* argv[])
