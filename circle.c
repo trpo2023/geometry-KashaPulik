@@ -151,6 +151,12 @@ void circleError(char *str, int line, int column)
     exit(1);
 }
 
+void lineError(int line)
+{
+    printf(RED_COLOR "Error" DEFOLT_COLOR " at line %d: cannot read the line\n", line);
+    exit(1);
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
