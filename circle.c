@@ -49,7 +49,6 @@ _Bool isCircle(char *str)
     int i = 0;
 
     while(1) {
-
         if((str[i] == ' ') || (str[i] == '('))
             break;
 
@@ -62,13 +61,16 @@ _Bool isCircle(char *str)
 
     i--;
 
-    if(i > 5)
-        return 0;
-    
     for(i = 0; i <= 5; i++){
         if(circleStr[i] != testStr[i])
             return 0;
     }
+
+    if(str[6] == ')')
+        return 1;
+
+    if((str[6] != ' ') && (str[6] != '('))
+        return 0;
 
     return 1;
 }
