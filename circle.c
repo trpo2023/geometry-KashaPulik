@@ -23,10 +23,12 @@ _Bool inputError(int argc)
         printf(RED_COLOR "Error: " DEFOLT_COLOR "no files to read\n");
         return 1;
     }
+
     if (argc > 2) {
         printf(RED_COLOR "Error: " DEFOLT_COLOR "too many arguments\n");
         return 1;
     }
+
     return 0;
 }
 
@@ -36,6 +38,7 @@ _Bool readError(char* argv[])
         printf(RED_COLOR "Error: " DEFOLT_COLOR "can't read the file\n");
         return 1;
     }
+    
     return 0;
 }
 
