@@ -35,15 +35,6 @@ _Bool readError(char* argv[])
     return 0;
 }
 
-Node *readFile(FILE *file)
-{
-	Node *strings = NULL;
-	int i = 0;
-	do {
-		push(&strings, i);
-		while ((strings->str[j] = fgetc(file)) != /n)
-}
-
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
