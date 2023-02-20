@@ -318,6 +318,97 @@ void unTokError(char *str, int line, int column)
     exit(1);
 }
 
+void readFile(FILE *file)
+{
+    char str[256];
+    int line = 1;
+    int column;
+    int end;
+    circle circle;
+    while(!feof(file)){
+
+        column = 0;
+
+        if(fgets(str, 255, file) == NULL){
+            lineError(line);
+        }
+
+        if(!isCircle(str)){
+            circleError(str, line, column + 1);
+        }
+        
+        column = 6;
+
+        column = skipSpace(str, line, column);
+
+        if(str[column] != '(')
+            bracketError(str, line, column, 0);
+
+        column++;
+
+        column = skipSpace(str, line, column);
+
+        end = readDouble(str, line, column);
+
+        if(str[end] != ' ')
+            doubleError(str, line, column);
+
+        if(isDouble(str, column, end)) {
+            circle.centre.x = strToDouble(str, column, end);
+        } else {
+            doubleError(str, line, column);
+        }
+
+        column = skipSpace(str, line, end);
+
+        end = readDouble(str, line, column);
+
+        if((str[end] != ' ') && (str[end] != ','))
+            commaError(str, line, end);
+
+        if(isDouble(str, column, end)) {
+            circle.centre.y = strToDouble(str, column, end);
+        } else {
+            doubleError(str, line, column);
+        }
+
+        if(str[end] == ',')
+            end++;
+
+        column = skipSpace(str, line, end);
+
+        if((str[column] != ',') && (!isdigit(str[column])))
+            commaError(str, line, column);
+        
+        if(str[column] == ',')
+            column++;
+
+        if(str[column] == ' ')
+            column = skipSpace(str, line, column + 1);
+
+        end = readDouble(str, line, column);
+
+        if((str[end] != ' ') && (str[end] != ')'))
+            bracketError(str, line, end, 1);
+        
+        if(isDouble(str, column, end)) {
+            circle.radius = strToDouble(str, column, end);
+        } else {
+            doubleError(str, line, column);
+        }
+
+        column = skipSpace(str, line, end);
+        if(str[column] != ')')
+            bracketError(str, line, column, 1);
+        
+        column = skipSpace(str, line, column + 1);
+        if((str[column] != '\n') && (str[column] != '\0') && (str[column] != EOF))
+            unTokError(str, line, column + 1);
+        circleCalc(line, str, circle.centre.x, circle.centre.y, circle.radius);
+        line++;
+    }
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
