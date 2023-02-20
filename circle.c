@@ -288,6 +288,36 @@ int readDouble(char *str, int line, int column)
     return column;
 }
 
+void unTokError(char *str, int line, int column)
+{
+    _Bool flag = 0;
+    int i = 0;
+
+    while(1) {
+        if(str[i] == '\n')
+            break;
+
+        if((str[i] == EOF) || (str[i] == '\0')) {
+            flag = 1;
+            break;
+        }
+        i++;
+    }
+
+    printf("%s", str);
+
+    if(flag)
+        printf("\n");
+
+    for(i = 1; i < column; i++)
+        printf(" ");
+
+    printf("^\n");
+
+    printf(RED_COLOR "Error" DEFOLT_COLOR " in line %d, column %d: unexpected token\n", line, column + 1);
+    exit(1);
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
