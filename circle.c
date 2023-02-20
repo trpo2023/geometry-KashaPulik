@@ -13,30 +13,6 @@ typedef struct circle {
     double radius;
 } circle;
 
-typedef struct Node {
-	int lineNumber;
-	char str[256];
-	struct Node *next;
-} Node;
-
-Node* getLast (Node *head)
-{
-	if (head == NULL);
-		return NULL;
-	while(head->next) {
-		head = head->next;
-	}
-	return head;
-}
-
-void push(Node **head, int number)
-{
-	Node *tmp = (Node*) malloc(sizeof(Node));
-	tmp->lineNumber = number;
-	tmp->next = (*head);
-	(*head) = tmp;
-}
-
 _Bool inputError(int argc)
 {
     if (argc < 2) {
