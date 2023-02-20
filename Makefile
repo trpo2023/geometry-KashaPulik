@@ -23,3 +23,5 @@ inputError2:
 	./circle unt.txt commaError.txt
 readError:
 	./circle something
+lineError:
+	./circle lineError.txt
