@@ -191,6 +191,7 @@ void bracketError(char *str, int line, int column, int key)
 
 void commaError(char *str, int line, int column)
 {
+    column++;
     _Bool flag = 0;
     int i = 0;
 
@@ -390,19 +391,18 @@ void readFile(FILE *file)
             doubleError(str, line, column);
         }
 
-        if(str[end] == ',')
+        if(str[end] == ',') {
             end++;
-
-        column = skipSpace(str, line, end);
-
-        if((str[column] != ',') && (!isdigit(str[column])))
-            commaError(str, line, column);
-        
-        if(str[column] == ',')
-            column++;
-
-        if(str[column] == ' ')
-            column = skipSpace(str, line, column + 1);
+            column = skipSpace(str, line, end);
+        } else {
+            column = skipSpace(str, line, end);
+            if(str[column] != ',')
+                commaError(str, line, column - 1);
+            if(str[column] == ',')
+                column++;
+            if(str[column] == ' ')
+                column = skipSpace(str, line, column + 1);
+        }
 
         end = readDouble(str, line, column);
 
