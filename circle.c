@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
 
 #define RED_COLOR "\x1b[31m"
 #define DEFOLT_COLOR "\x1b[0m"
