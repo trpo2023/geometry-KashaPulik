@@ -73,6 +73,54 @@ _Bool isCircle(char *str)
     return 1;
 }
 
+_Bool isDouble(char *str, int start, int end)
+{
+    if(start == end)
+        return 0;
+
+    char testString[256];
+    int j, i = 0;
+
+    for(j = start; j < end; j++) {
+        testString[i] = str[j];
+        i++;
+    }
+
+    testString[i] = '\0';
+    j = 0;
+
+    while(1)
+    {
+        if(!isdigit(testString[j]))
+            break;
+        j++;
+    }
+
+    if(j == 0)
+        return 0;
+
+    if(testString[j] == '\0')
+        return 1;
+
+    if(testString[j] == '.') {
+        j++;
+        if(testString[j] == '\0')
+            return 0;
+    } else {
+        return 0;
+    }
+
+    while(1)
+    {
+        if(!isdigit(testString[j])){
+            if(testString[j] == '\0')
+                return 1;
+            return 0;
+        }
+        j++;
+    }
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
