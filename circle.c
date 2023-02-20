@@ -262,7 +262,25 @@ double strToDouble(char *str, int start, int end)
 
 void circleCalc(int number, char *str, double x, double y, double radius)
 {
-    printf("%d. %s\n", number, str);
+    _Bool flag = 0;
+    int i = 0;
+
+    while(1) {
+        if(str[i] == '\n')
+            break;
+
+        if((str[i] == EOF) || (str[i] == '\0')) {
+            flag = 1;
+            break;
+        }
+        i++;
+    }
+
+    printf("%d. %s", number, str);
+
+    if(flag)
+        printf("\n");
+
     printf("    perimetr = %f\n", (2 * M_PI * radius));
     printf("    area = %f\n", (M_PI * radius * radius));
     printf("\n");
