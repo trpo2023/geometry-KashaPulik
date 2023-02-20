@@ -268,6 +268,16 @@ void circleCalc(int number, char *str, double x, double y, double radius)
     printf("\n");
 }
 
+int skipSpace(char *str, int line, int column)
+{
+    while(str[column] == ' '){
+        if(column == 79)
+            lineError(line);
+        column++;
+    }
+    return column;
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
