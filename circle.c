@@ -260,6 +260,14 @@ double strToDouble(char *str, int start, int end)
     return atof(doublestr);
 }
 
+void circleCalc(int number, char *str, double x, double y, double radius)
+{
+    printf("%d. %s\n", number, str);
+    printf("    perimetr = %f\n", (2 * M_PI * radius));
+    printf("    area = %f\n", (M_PI * radius * radius));
+    printf("\n");
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
