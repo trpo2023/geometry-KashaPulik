@@ -38,8 +38,39 @@ _Bool readError(char* argv[])
         printf(RED_COLOR "Error: " DEFOLT_COLOR "can't read the file\n");
         return 1;
     }
-    
+
     return 0;
+}
+
+_Bool isCircle(char *str)
+{
+    char circleStr[7] = "circle";
+    char testStr[256];
+    int i = 0;
+
+    while(1) {
+
+        if((str[i] == ' ') || (str[i] == '('))
+            break;
+
+        if(i == 79)
+            return 0;
+
+        testStr[i] = tolower(str[i]);
+        i++;
+    }
+
+    i--;
+
+    if(i > 5)
+        return 0;
+    
+    for(i = 0; i <= 5; i++){
+        if(circleStr[i] != testStr[i])
+            return 0;
+    }
+
+    return 1;
 }
 
 int main(int argc, char* argv[])
