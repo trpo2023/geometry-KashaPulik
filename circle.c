@@ -301,11 +301,14 @@ int skipSpace(char *str, int line, int column)
 
 int readDouble(char *str, int line, int column)
 {
+    int check = column;
     while((str[column] == '.') || (isdigit(str[column]))) {
         if(column == 79)
             lineError(line);
          column++;
     }
+    if(column == check)
+        doubleError(str, line, column);
     return column;
 }
 
