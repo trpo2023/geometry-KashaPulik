@@ -249,6 +249,17 @@ void doubleError(char *str, int line, int column)
     exit(1);
 }
 
+double strToDouble(char *str, int start, int end)
+{
+    char doublestr[16];
+    int i, j = 0;
+    for(i = start; i <= end; i++) {
+        doublestr[j] = str[i];
+        j++;
+    }
+    return atof(doublestr);
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
