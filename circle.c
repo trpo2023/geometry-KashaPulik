@@ -278,6 +278,16 @@ int skipSpace(char *str, int line, int column)
     return column;
 }
 
+int readDouble(char *str, int line, int column)
+{
+    while((str[column] == '.') || (isdigit(str[column]))) {
+        if(column == 79)
+            lineError(line);
+         column++;
+    }
+    return column;
+}
+
 int main(int argc, char* argv[])
 {
     if (inputError(argc))
