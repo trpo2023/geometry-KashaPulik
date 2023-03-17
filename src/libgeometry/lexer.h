@@ -9,10 +9,12 @@
 
 _Bool input_error(int argc);
 _Bool read_error(char* argv[]);
+char* copy_letter_sequence(char* str, unsigned int* index);
+void tolower_string(char* str, unsigned int index);
+_Bool there_is_symbol(char* str, unsigned int index, char symbol);
 _Bool is_circle(char* str);
 char* copy_part_of_string(char* str, int start, int end);
 unsigned int skip_digits(char* str, unsigned int index);
-_Bool there_is_symbol(char* str, unsigned int index, char symbol);
 _Bool is_double(char* str, int start, int end);
 void circleError(char* str, int line, int column);
 void lineError(int line);

@@ -25,34 +25,60 @@ _Bool read_error(char* argv[])
     return 0;
 }
 
+char* copy_letter_sequence(char* str, unsigned int* index)
+{
+    char* copy = (char*)malloc(256);
+    unsigned int copy_index = 0;
+    if (copy == NULL)
+        return NULL;
+    while (1) {
+        if (!isalpha(str[copy_index])) {
+            if (copy_index == 0) {
+                free(copy);
+                return NULL;
+            }
+            copy[copy_index] = '\0';
+            *index = copy_index;
+            return copy;
+        }
+        copy[copy_index] = str[copy_index];
+        copy_index++;
+    }
+}
+
+void tolower_string(char* str, unsigned int index)
+{
+    unsigned short i;
+    for (i = 0; i < index; i++) {
+        str[i] = tolower(str[i]);
+    }
+}
+
+_Bool there_is_symbol(char* str, unsigned int index, char symbol)
+{
+    if (str[index] == symbol)
+        return 1;
+    return 0;
+}
+
 _Bool is_circle(char* str)
 {
-    char circleStr[7] = "circle";
-    char testStr[256];
-    int i = 0;
+    char circle_string[7] = "circle";
+    char* test_string;
+    unsigned int index = 0;
 
-    while (1) {
-        if ((str[i] == ' ') || (str[i] == '('))
-            break;
+    test_string = copy_letter_sequence(str, &index);
+    if (test_string == NULL)
+        return 0;
+    tolower_string(test_string, index);
 
-        if (i == 79)
-            return 0;
+    if (strcmp(test_string, circle_string) != 0)
+        return 0;
 
-        testStr[i] = tolower(str[i]);
-        i++;
-    }
-
-    i--;
-
-    for (i = 0; i <= 5; i++) {
-        if (circleStr[i] != testStr[i])
-            return 0;
-    }
-
-    if (str[6] == ')')
+    if (!there_is_symbol(str, index, ')'))
         return 1;
 
-    if ((str[6] != ' ') && (str[6] != '('))
+    if (!(there_is_symbol(str, index, ' ') && there_is_symbol(str, index, '(')))
         return 0;
 
     return 1;
@@ -79,13 +105,6 @@ unsigned int skip_digits(char* str, unsigned int index)
             return index;
         index++;
     }
-}
-
-_Bool there_is_symbol(char* str, unsigned int index, char symbol)
-{
-    if (str[index] == symbol)
-        return 1;
-    return 0;
 }
 
 _Bool is_double(char* str, int start, int end)
