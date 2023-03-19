@@ -72,15 +72,22 @@ _Bool is_circle(char* str)
         return 0;
     tolower_string(test_string, index);
 
-    if (strcmp(test_string, circle_string) != 0)
+    if (strcmp(test_string, circle_string) != 0) {
+        free(test_string);
         return 0;
+    }
 
-    if (!there_is_symbol(str, index, ')'))
+    if (!there_is_symbol(str, index, ')')) {
+        free(test_string);
         return 1;
+    }
 
-    if (!(there_is_symbol(str, index, ' ') && there_is_symbol(str, index, '(')))
+    if (!(there_is_symbol(str, index, ' ')
+          && there_is_symbol(str, index, '('))) {
+        free(test_string);
         return 0;
-
+    }
+    free(test_string);
     return 1;
 }
 
@@ -113,60 +120,77 @@ _Bool is_double(char* str, int start, int end)
     unsigned int index = 0;
 
     test_string = copy_part_of_string(str, start, end);
-    if (!test_string)
+    if (test_string == NULL)
         return 0;
 
-    if (index == skip_digits(test_string, index))
+    if (index == skip_digits(test_string, index)) {
+        free(test_string);
         return 0;
-    index = skip_digits(test_string, index);
-
-    if (there_is_symbol(test_string, index, '\0'))
-        return 1;
-
-    if (!there_is_symbol(test_string, index, '.'))
-        return 0;
-    index++;
-
-    if (there_is_symbol(test_string, index, '\0'))
-        return 0;
-
-    if (index == skip_digits(test_string, index))
-        return 0;
+    }
     index = skip_digits(test_string, index);
 
     if (there_is_symbol(test_string, index, '\0')) {
         free(test_string);
         return 1;
     }
+
+    if (!there_is_symbol(test_string, index, '.')) {
+        free(test_string);
+        return 0;
+    }
+    index++;
+
+    if (there_is_symbol(test_string, index, '\0')) {
+        free(test_string);
+        return 0;
+    }
+
+    if (index == skip_digits(test_string, index)) {
+        free(test_string);
+        return 0;
+    }
+
+    index = skip_digits(test_string, index);
+
+    if (there_is_symbol(test_string, index, '\0')) {
+        free(test_string);
+        return 1;
+    }
+
     free(test_string);
     return 0;
 }
 
-void circleError(char* str, int line, int column)
+_Bool this_is_the_end(char* str)
 {
-    _Bool flag = 0;
-    int i = 0;
     while (1) {
-        if (str[i] == '\n')
-            break;
+        if (*str == '\n')
+            return 0;
 
-        if ((str[i] == EOF) || (str[i] == '\0')) {
-            flag = 1;
-            break;
+        if ((*str == EOF) || (*str == '\0')) {
+            return 1;
         }
-
-        i++;
+        str++;
     }
+}
 
+void print_arrow(int column)
+{
+    while (column > 1) {
+        printf(" ");
+        column--;
+    }
+    printf("^\n");
+}
+
+void circle_error(char* str, int line, int column)
+{
     printf("%s", str);
 
-    if (flag)
+    if (this_is_the_end(str))
         printf("\n");
 
-    for (i = 1; i < column; i++)
-        printf(" ");
-
-    printf("^\n");
+    print_arrow(column);
 
     printf(RED_COLOR "Error" DEFOLT_COLOR
                      " at line %d, column %d: expected 'circle'\n",
@@ -175,40 +199,24 @@ void circleError(char* str, int line, int column)
     exit(1);
 }
 
-void lineError(int line)
+void line_error(int line)
 {
     printf(RED_COLOR "Error" DEFOLT_COLOR " at line %d: cannot read the line\n",
            line);
     exit(1);
 }
 
-void bracketError(char* str, int line, int column, int key)
+void bracket_error(char* str, int line, int column, int key)
 {
     char brackets[3] = "()";
-    _Bool flag = 0;
-    int i = 0;
     column++;
-
-    while (1) {
-        if (str[i] == '\n')
-            break;
-
-        if ((str[i] == EOF) || (str[i] == '\0')) {
-            flag = 1;
-            break;
-        }
-        i++;
-    }
 
     printf("%s", str);
 
-    if (flag)
+    if (this_is_the_end(str))
         printf("\n");
 
-    for (i = 1; i < column; i++)
-        printf(" ");
-
-    printf("^\n");
+    print_arrow(column);
 
     printf(RED_COLOR "Error" DEFOLT_COLOR
                      " in line %d, column %d: expected '%c'\n",
@@ -218,32 +226,16 @@ void bracketError(char* str, int line, int column, int key)
     exit(1);
 }
 
-void commaError(char* str, int line, int column)
+void comma_error(char* str, int line, int column)
 {
     column++;
-    _Bool flag = 0;
-    int i = 0;
-
-    while (1) {
-        if (str[i] == '\n')
-            break;
-
-        if ((str[i] == EOF) || (str[i] == '\0')) {
-            flag = 1;
-            break;
-        }
-        i++;
-    }
 
     printf("%s", str);
 
-    if (flag)
+    if (this_is_the_end(str))
         printf("\n");
 
-    for (i = 1; i < column; i++)
-        printf(" ");
-
-    printf("^\n");
+    print_arrow(column);
 
     printf(RED_COLOR "Error" DEFOLT_COLOR
                      " at line %d, column %d: expected comma\n",
@@ -252,31 +244,16 @@ void commaError(char* str, int line, int column)
     exit(1);
 }
 
-void doubleError(char* str, int line, int column)
+void double_error(char* str, int line, int column)
 {
     column++;
-    _Bool flag = 0;
-    int i = 0;
 
-    while (1) {
-        if (str[i] == '\n')
-            break;
-
-        if ((str[i] == EOF) || (str[i] == '\0')) {
-            flag = 1;
-            break;
-        }
-        i++;
-    }
     printf("%s", str);
 
-    if (flag)
+    if (this_is_the_end(str))
         printf("\n");
 
-    for (i = 1; i < column; i++)
-        printf(" ");
-
-    printf("^\n");
+    print_arrow(column);
 
     printf(RED_COLOR "Error" DEFOLT_COLOR
                      " in line %d, column %d: expected '<double>'\n",
@@ -285,35 +262,27 @@ void doubleError(char* str, int line, int column)
     exit(1);
 }
 
-void unTokError(char* str, int line, int column)
+void unexpected_token_error(char* str, int line, int column)
 {
-    _Bool flag = 0;
-    int i = 0;
-
-    while (1) {
-        if (str[i] == '\n')
-            break;
-
-        if ((str[i] == EOF) || (str[i] == '\0')) {
-            flag = 1;
-            break;
-        }
-        i++;
-    }
-
     printf("%s", str);
 
-    if (flag)
+    if (this_is_the_end(str))
         printf("\n");
 
-    for (i = 1; i < column; i++)
-        printf(" ");
-
-    printf("^\n");
+    print_arrow(column);
 
     printf(RED_COLOR "Error" DEFOLT_COLOR
                      " in line %d, column %d: unexpected token\n",
            line,
            column + 1);
     exit(1);
+}
+
+_Bool empty_string(char* str)
+{
+    if (*str == '\n') {
+        return 1;
+    } else {
+        return 0;
+    }
 }

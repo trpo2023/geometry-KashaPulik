@@ -15,13 +15,11 @@ LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
 SRC_EXT = c
 
 APP_SOURCES = $(wildcard $(SRC_DIR)/$(APP_NAME)/*.$(SRC_EXT))
-$(info APP_SOURCES = $(APP_SOURCES))
 APP_OBJECTS := $(patsubst $(SRC_DIR)/%.$(SRC_EXT),$(OBJ_DIR)/$(SRC_DIR)/%.o,$(APP_SOURCES))
 
 LIB_SOURCES = $(wildcard $(SRC_DIR)/$(LIB_NAME)/*.$(SRC_EXT))
-$(info LIB_SOURCES = $(LIB_SOURCES))
 LIB_OBJECTS := $(patsubst $(SRC_DIR)/%.$(SRC_EXT),$(OBJ_DIR)/$(SRC_DIR)/%.o,$(LIB_SOURCES))
-$(info LIB_OBJECTS = $(LIB_OBJECTS))
+
 DEPS = $(APP_OBJECTS:.o=.d) $(LIB_OBJECTS:.o=.d)
 
 .PHONY: all

@@ -16,8 +16,7 @@ typedef struct circle {
 } circle;
 
 double string_to_double(char* str, int start, int end);
-_Bool is_this_the_end(char* str);
-void circle_output(int number, char* str, circle current_circle);
+void circle_output(int number, circle current_circle);
 int skip_space(char* str, int line, int column);
-int read_double(char* str, int line, int column);
+int skip_double(char* str, int line, int column);
 void read_file(FILE* file);
