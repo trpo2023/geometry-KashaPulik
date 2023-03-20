@@ -15,8 +15,7 @@ typedef struct circle {
     double radius;
 } circle;
 
-double string_to_double(char* str, int start, int end);
 void circle_output(int number, circle current_circle);
-int skip_space(char* str, int line, int column);
-int skip_double(char* str, int line, int column);
-void read_file(FILE* file);
+// void read_file(FILE* file);
+void read_line(char* str, unsigned int* line, unsigned int* count, _Bool key);
+void stdin_read();

@@ -38,4 +38,8 @@ $(OBJ_DIR)/%.o: %.$(SRC_EXT)
 
 .PHONY: clean
 clean:
-	rm $(LIB_PATH) $(APP_OBJECTS) $(LIB_OBJECTS) $(DEPS) $(APP_PATH)
+	rm $(LIB_PATH)
+	rm $(APP_OBJECTS)
+	rm $(LIB_OBJECTS)
+	rm $(DEPS)
+	rm $(APP_PATH)
