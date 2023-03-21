@@ -12,7 +12,7 @@ void print_arrow(unsigned int column);
 void defolt_error_output(
         char* str, unsigned int line, unsigned int column, _Bool key);
 void input_error();
-_Bool read_error(char* argv[]);
+void read_error();
 void circle_error(char* str, unsigned int line, unsigned int column, _Bool key);
 void bracket_error(
         char* str,

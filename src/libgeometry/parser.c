@@ -17,100 +17,6 @@ void circle_output(int number, circle current_circle)
     printf("\n");
 }
 
-/*void read_file(FILE* file)
-{
-    char str[256];
-    int line = 1;
-    int column;
-    int end;
-    circle circle;
-    while (!feof(file)) {
-        column = 0;
-
-        if (fgets(str, 255, file) == NULL) {
-            line_error(line);
-        }
-        if (empty_string(str, column)) {
-            line++;
-            continue;
-        }
-        if (!is_circle(str)) {
-            circle_error(str, line, column + 1);
-        }
-
-        column = 6;
-
-        column = skip_space(str, column);
-
-        if (!there_is_symbol(str, column, '('))
-            bracket_error(str, line, column, 0);
-
-        column++;
-
-        column = skip_space(str, column);
-
-        end = skip_double(str, line, column);
-
-        if (!there_is_symbol(str, end, ' '))
-            double_error(str, line, column);
-
-        if (is_double(str, column, end)) {
-            circle.centre.x = string_to_double(str, column, end);
-        } else {
-            double_error(str, line, column);
-        }
-
-        column = skip_space(str, end);
-
-        end = skip_double(str, line, column);
-
-        if (!there_is_symbol(str, end, ' ') && !there_is_symbol(str, end, ','))
-            comma_error(str, line, end);
-
-        if (is_double(str, column, end)) {
-            circle.centre.y = string_to_double(str, column, end);
-        } else {
-            double_error(str, line, column);
-        }
-
-        if (there_is_symbol(str, end, ',')) {
-            end++;
-            column = skip_space(str, end);
-        } else {
-            column = skip_space(str, end);
-            if (!there_is_symbol(str, column, ','))
-                comma_error(str, line, column - 1);
-            if (there_is_symbol(str, column, ','))
-                column++;
-            if (there_is_symbol(str, column, ' '))
-                column = skip_space(str, column + 1);
-        }
-
-        end = skip_double(str, line, column);
-
-        if (!there_is_symbol(str, end, ' ') && !there_is_symbol(str, end, ')'))
-            bracket_error(str, line, end, 1);
-
-        if (is_double(str, column, end)) {
-            circle.radius = string_to_double(str, column, end);
-        } else {
-            double_error(str, line, column);
-        }
-
-        column = skip_space(str, end);
-        if (!there_is_symbol(str, column, ')'))
-            bracket_error(str, line, column, 1);
-
-        column = skip_space(str, column + 1);
-        if (!there_is_symbol(str, column, '\n')
-            && !there_is_symbol(str, column, '\0')
-            && !there_is_symbol(str, column, EOF))
-            unexpected_token_error(str, line, column + 1);
-        circle_output(line, circle);
-        line++;
-    }
-}*/
-
 void read_line(char* str, unsigned int* line, unsigned int* count, _Bool key)
 {
     unsigned int buffer_line = *line;
@@ -190,4 +96,21 @@ void stdin_read()
             break;
         read_line(str, &line, &count, 0);
     }
+}
+
+void file_read(char* file_name)
+{
+    FILE* file;
+    file = fopen(file_name, "r");
+    if (file == NULL) {
+        read_error();
+        exit(1);
+    }
+    char str[256];
+    unsigned int line = 1, count = 1;
+    while (!feof(file)) {
+        fgets(str, 255, file);
+        read_line(str, &line, &count, 1);
+    }
+    fclose(file);
 }

@@ -42,23 +42,17 @@ void defolt_error_output(
 void input_error()
 {
     printf(RED_COLOR "Error: " DEFOLT_COLOR "too many arguments\n");
-    exit(1);
 }
 
-_Bool read_error(char* argv[])
+void read_error()
 {
-    if (fopen(argv[1], "r") == NULL) {
-        printf(RED_COLOR "Error: " DEFOLT_COLOR "can't read the file\n");
-        return 1;
-    }
-
-    return 0;
+    printf(RED_COLOR "Error: " DEFOLT_COLOR "can't read the file\n");
 }
 
 void circle_error(char* str, unsigned int line, unsigned int column, _Bool key)
 {
     defolt_error_output(str, line, column, key);
-    printf("expected 'circle'\n");
+    printf("expected 'circle'\n\n");
 }
 
 void bracket_error(
@@ -71,26 +65,26 @@ void bracket_error(
     number--;
     char brackets[3] = "()";
     defolt_error_output(str, line, column, key);
-    printf("expected '%c'\n", brackets[number]);
+    printf("expected '%c'\n\n", brackets[number]);
 }
 
 void comma_error(char* str, unsigned int line, unsigned int column, _Bool key)
 {
     defolt_error_output(str, line, column, key);
-    printf("expected comma\n");
+    printf("expected comma\n\n");
 }
 
 void double_error(char* str, unsigned int line, unsigned int column, _Bool key)
 {
     defolt_error_output(str, line, column, key);
-    printf("expected '<double>'\n");
+    printf("expected '<double>'\n\n");
 }
 
 void unexpected_token_error(
         char* str, unsigned int line, unsigned int column, _Bool key)
 {
     defolt_error_output(str, line, column, key);
-    printf("unexpected token\n");
+    printf("unexpected token\n\n");
 }
 
 double
