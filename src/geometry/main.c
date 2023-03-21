@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     if (argc == 2) {
         file_read(argv[1]);
     }
-    if (argc > 2){
+    if (argc > 2) {
         input_error();
         exit(1);
     }
