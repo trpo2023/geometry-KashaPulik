@@ -1,29 +1,11 @@
 #pragma once
-#include <ctype.h>
+
 #include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define RED_COLOR "\x1b[31m"
-#define DEFOLT_COLOR "\x1b[0m"
-
 _Bool this_is_the_end(char* str);
-void print_arrow(unsigned int column);
-void defolt_error_output(
-        char* str, unsigned int line, unsigned int column, _Bool key);
-void input_error();
-void read_error();
-void circle_error(char* str, unsigned int line, unsigned int column, _Bool key);
-void bracket_error(
-        char* str,
-        unsigned int line,
-        unsigned int column,
-        unsigned int number,
-        _Bool key);
-void comma_error(char* str, unsigned int line, unsigned int column, _Bool key);
-void double_error(char* str, unsigned int line, unsigned int column, _Bool key);
-void unexpected_token_error(
-        char* str, unsigned int line, unsigned int column, _Bool key);
 double
 string_to_double(char* str, unsigned int start_index, unsigned int end_index);
 char* copy_letter_sequence(char* str, unsigned int* index);
