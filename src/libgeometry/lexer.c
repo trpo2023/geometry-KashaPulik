@@ -22,7 +22,7 @@ void print_arrow(unsigned int column)
     printf("^\n");
 }
 
-void defolt_error_output(
+void default_error_output(
         char* str, unsigned int line, unsigned int column, _Bool key)
 {
     column++;
@@ -51,7 +51,7 @@ void read_error()
 
 void circle_error(char* str, unsigned int line, unsigned int column, _Bool key)
 {
-    defolt_error_output(str, line, column, key);
+    default_error_output(str, line, column, key);
     printf("expected 'circle'\n\n");
 }
 
@@ -64,26 +64,26 @@ void bracket_error(
 {
     number--;
     char brackets[3] = "()";
-    defolt_error_output(str, line, column, key);
+    default_error_output(str, line, column, key);
     printf("expected '%c'\n\n", brackets[number]);
 }
 
 void comma_error(char* str, unsigned int line, unsigned int column, _Bool key)
 {
-    defolt_error_output(str, line, column, key);
+    default_error_output(str, line, column, key);
     printf("expected comma\n\n");
 }
 
 void double_error(char* str, unsigned int line, unsigned int column, _Bool key)
 {
-    defolt_error_output(str, line, column, key);
+    default_error_output(str, line, column, key);
     printf("expected '<double>'\n\n");
 }
 
 void unexpected_token_error(
         char* str, unsigned int line, unsigned int column, _Bool key)
 {
-    defolt_error_output(str, line, column, key);
+    default_error_output(str, line, column, key);
     printf("unexpected token\n\n");
 }
 
