@@ -1,6 +1,6 @@
+#include <libgeometry/interface.h>
 #include <libgeometry/lexer.h>
 #include <libgeometry/parser.h>
-#include <libgeometry/interface.h>
 
 int main(int argc, char* argv[])
 {

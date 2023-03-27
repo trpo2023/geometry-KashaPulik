@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdio.h>
 
 #define RED_COLOR "\x1b[31m"
