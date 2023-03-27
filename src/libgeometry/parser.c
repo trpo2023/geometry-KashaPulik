@@ -1,3 +1,4 @@
+#include <libgeometry/interface.h>
 #include <libgeometry/lexer.h>
 #include <libgeometry/parser.h>
 
