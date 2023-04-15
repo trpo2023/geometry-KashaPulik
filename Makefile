@@ -3,6 +3,7 @@ LIB_NAME = libgeometry
 TEST_NAME = geometry_test
 
 TFLAG = -I thirdparty
+LMFLAG = -lm
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -I src -MMD
 CC = gcc
@@ -25,7 +26,7 @@ LIB_SOURCES = $(wildcard $(SRC_DIR)/$(LIB_NAME)/*.$(SRC_EXT))
 LIB_OBJECTS := $(patsubst $(SRC_DIR)/%.$(SRC_EXT),$(OBJ_DIR)/$(SRC_DIR)/%.o,$(LIB_SOURCES))
 
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.$(SRC_EXT))
-TEST_OBJECTS := $(patsubst $(TEST_DIR)/%.$(SRC_EXT),$(OBJ_DIR)/test/%.o,$(TEST_SOURCES))
+TEST_OBJECTS := $(patsubst $(TEST_DIR)/%.$(SRC_EXT),$(OBJ_DIR)/$(TEST_DIR)/%.o,$(TEST_SOURCES))
 
 DEPS = $(APP_OBJECTS:.o=.d) $(LIB_OBJECTS:.o=.d) $(TEST_OBJECTS:.o=.d)
 
@@ -35,7 +36,7 @@ all: $(APP_PATH)
 -include $(DEPS)
 
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ $(LMFLAG)
 
 $(LIB_PATH): $(LIB_OBJECTS)
 	ar rcs $@ $^

@@ -1,4 +1,4 @@
-#include "../thirdparty/ctest.h"
+#include <ctest.h>
 
 CTEST(arithmetic_suite, simple_sum)
 {
@@ -13,4 +13,3 @@ CTEST(arithmetic_suite, simple_sum)
     const int expected = 3;
     ASSERT_EQUAL(expected, result);
 }
-

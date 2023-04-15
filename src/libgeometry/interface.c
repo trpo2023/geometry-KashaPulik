@@ -1,5 +1,6 @@
 #include <libgeometry/interface.h>
 #include <libgeometry/lexer.h>
+#include <libgeometry/parser.h>
 
 void print_arrow(unsigned int column)
 {
@@ -73,4 +74,36 @@ void unexpected_token_error(
 {
     default_error_output(str, line, column, key);
     printf("unexpected token\n\n");
+}
+
+void circles_output(unsigned int count, circle* circles)
+{
+    listnode* intersects = NULL;
+    for (unsigned int number = 0; number < count; number++) {
+        intersects = count_instersects(intersects, circles, number, count);
+        circle_output(number, circles[number], &intersects);
+    }
+}
+
+void circle_output(int number, circle current_circle, listnode** intersects)
+{
+    printf("%d. circle(%.1f %.1f, %.1f)",
+           number + 1,
+           current_circle.centre.x,
+           current_circle.centre.y,
+           current_circle.radius);
+
+    printf("\n");
+
+    printf("    perimetr = %f\n", (2 * M_PI * current_circle.radius));
+    printf("    area = %f\n",
+           (M_PI * current_circle.radius * current_circle.radius));
+    printf("    intersects:\n");
+    if (*intersects == NULL) {
+        printf("      none\n");
+    }
+    while (*intersects != NULL) {
+        printf("      %d. circle\n", pop(intersects));
+    }
+    printf("\n");
 }
