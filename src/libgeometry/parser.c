@@ -105,7 +105,7 @@ void read_line(
 void stdin_read()
 {
     char str[256];
-    unsigned int line = 1, count = 0, buffer_size = 1;
+    unsigned int line = 1, count = 0, buffer_size = 8;
     circle* circles = (circle*)malloc(buffer_size * sizeof(circle));
     while (1) {
         printf("Введите данные о фигуре в формате WKT или 'q' для выхода\n");

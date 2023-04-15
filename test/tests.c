@@ -1,6 +1,7 @@
 #include <ctest.h>
 #include <libgeometry/lexer.h>
 #include <libgeometry/listnode.h>
+#include <libgeometry/parser.h>
 
 CTEST(lexer, this_is_the_end)
 {
@@ -36,6 +37,8 @@ CTEST(lexer, copy_letter_sequence)
     unsigned int expected_index = 6;
     ASSERT_STR(expected, result);
     ASSERT_EQUAL_U(expected_index, index);
+
+    free(result);
 
     char bad_test_string[] = "123";
     result = copy_letter_sequence(bad_test_string, &index);
@@ -270,4 +273,21 @@ CTEST(listnode, all)
     result = pop(&test_list);
     expected = 2;
     ASSERT_EQUAL_U(expected, result);
+}
+
+CTEST(parser, count_instersects)
+{
+    circle* circles = (circle*)malloc(2 * sizeof(circle));
+    circles[0].centre.x = 0;
+    circles[0].centre.y = 0;
+    circles[0].radius = 5;
+    circles[1].centre.x = 0;
+    circles[1].centre.y = 4;
+    circles[1].radius = 5;
+    listnode* intersects = NULL;
+    intersects = count_instersects(intersects, circles, 0, 2);
+    unsigned int result = pop(&intersects);
+    unsigned int expected = 2;
+    ASSERT_EQUAL_U(expected, result);
+    free(circles);
 }
