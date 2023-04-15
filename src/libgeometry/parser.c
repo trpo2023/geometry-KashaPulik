@@ -1,24 +1,36 @@
 #include <libgeometry/interface.h>
 #include <libgeometry/lexer.h>
+#include <libgeometry/listnode.h>
 #include <libgeometry/parser.h>
 
-void circle_output(int number, circle current_circle)
+listnode* count_instersects(
+        listnode* intersects,
+        circle* circles,
+        unsigned int number,
+        unsigned int count)
 {
-    printf("%d. circle(%f %f, %f)",
-           number,
-           current_circle.centre.x,
-           current_circle.centre.y,
-           current_circle.radius);
-
-    printf("\n");
-
-    printf("    perimetr = %f\n", (2 * M_PI * current_circle.radius));
-    printf("    area = %f\n",
-           (M_PI * current_circle.radius * current_circle.radius));
-    printf("\n");
+    for (unsigned int i = 0; i < count; i++) {
+        if (i == number)
+            continue;
+        if (pow(circles[i].radius - circles[number].radius, 2)
+                    <= (pow(circles[i].centre.x - circles[number].centre.x, 2)
+                        + pow(circles[i].centre.y - circles[number].centre.y,
+                              2))
+            && (pow(circles[i].centre.x - circles[number].centre.x, 2)
+                + pow(circles[i].centre.y - circles[number].centre.y, 2))
+                    <= pow(circles[i].radius + circles[number].radius, 2))
+            push_back(&intersects, i + 1);
+    }
+    return intersects;
 }
 
-void read_line(char* str, unsigned int* line, unsigned int* count, _Bool key)
+void read_line(
+        char* str,
+        unsigned int* line,
+        unsigned int* count,
+        _Bool key,
+        circle** circles,
+        unsigned int* buffer_size)
 {
     unsigned int buffer_line = *line;
     unsigned int buffer_count = *count;
@@ -79,8 +91,12 @@ void read_line(char* str, unsigned int* line, unsigned int* count, _Bool key)
         *line = buffer_line;
         return;
     }
-    circle_output(*count, current_circle);
+    if (buffer_count == *buffer_size) {
+        *buffer_size *= 2;
+        *circles = realloc(*circles, *buffer_size * sizeof(circle));
+    }
     buffer_count++;
+    (*circles)[buffer_count - 1] = current_circle;
     *count = buffer_count;
     buffer_line++;
     *line = buffer_line;
@@ -89,14 +105,20 @@ void read_line(char* str, unsigned int* line, unsigned int* count, _Bool key)
 void stdin_read()
 {
     char str[256];
-    unsigned int line = 1, count = 1;
+    unsigned int line = 1, count = 0, buffer_size = 8;
+    circle* circles = (circle*)malloc(buffer_size * sizeof(circle));
     while (1) {
         printf("Введите данные о фигуре в формате WKT или 'q' для выхода\n");
+        printf("Введите 'x' чтобы вывести информацию о фигурах\n");
         fgets(str, 255, stdin);
         if (there_is_symbol(str, 0, 'q'))
+            return;
+        if (there_is_symbol(str, 0, 'x'))
             break;
-        read_line(str, &line, &count, 0);
+        read_line(str, &line, &count, 0, &circles, &buffer_size);
     }
+    circles_output(count, circles);
+    free(circles);
 }
 
 void file_read(char* file_name)
@@ -108,10 +130,13 @@ void file_read(char* file_name)
         exit(1);
     }
     char str[256];
-    unsigned int line = 1, count = 1;
+    unsigned int line = 1, count = 1, buffer_size = 1;
+    circle* circles = (circle*)malloc(buffer_size * sizeof(circle));
     while (!feof(file)) {
         fgets(str, 255, file);
-        read_line(str, &line, &count, 1);
+        read_line(str, &line, &count, 1, &circles, &buffer_size);
     }
     fclose(file);
+    circles_output(count, circles);
+    free(circles);
 }

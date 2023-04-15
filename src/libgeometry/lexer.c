@@ -50,6 +50,8 @@ void tolower_string(char* str, unsigned int index)
 {
     unsigned short i;
     for (i = 0; i < index; i++) {
+        if (str[i] == '\0')
+            break;
         str[i] = tolower(str[i]);
     }
 }
