@@ -44,30 +44,25 @@ $(LIB_PATH): $(LIB_OBJECTS)
 $(OBJ_DIR)/%.o: %.$(SRC_EXT)
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
-.PHONY: clean
-clean:
-	rm $(LIB_PATH)
-	rm $(APP_OBJECTS)
-	rm $(LIB_OBJECTS)
-	rm $(DEPS)
-	rm $(APP_PATH)
-	rm $(TEST_PATH)
-	rm $(TEST_OBJECTS)
-
-
-
-
 .PHONY: test
-test: $(TEST_PATH) $(LIB_PATH)
+test: $(TEST_PATH)
 	$(TEST_PATH)
 
-$(TEST_PATH): $(TEST_OBJECTS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
+$(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH)
+	$(CC) $(TFLAG) $(CFLAGS) $(CPPFLAGS) -o $@ $^ $(LMFLAG)
 
 $(OBJ_DIR)/$(TEST_DIR)/main.o: $(TEST_DIR)/main.c
-	$(CC) -c $(TFLAG) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	$(CC) $(TFLAG) $(CFLAGS) $(CPPFLAGS) -c -o $@ $^
 
 $(OBJ_DIR)/$(TEST_DIR)/tests.o: $(TEST_DIR)/tests.c
-	$(CC) -c $(TFLAG) $(CFLAGS) $(CPPFLAGS) $< -o $@
+	$(CC) $(TFLAG) $(CFLAGS) $(CPPFLAGS) -c -o $@ $^
 
-
+.PHONY: clean
+clean:
+	rm -rf $(LIB_PATH)
+	rm -rf $(APP_OBJECTS)
+	rm -rf $(LIB_OBJECTS)
+	rm -rf $(APP_PATH)
+	rm -rf $(TEST_PATH)
+	rm -rf $(TEST_OBJECTS)
+	rm -rf $(DEPS)
