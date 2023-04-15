@@ -1,5 +1,6 @@
 #include <ctest.h>
 #include <libgeometry/lexer.h>
+#include <libgeometry/listnode.h>
 
 CTEST(lexer, this_is_the_end)
 {
@@ -253,4 +254,20 @@ CTEST(lexer, end_handling)
     result = end_handling(test_string, index);
     expected = 0;
     ASSERT_EQUAL(expected, result);
+}
+
+CTEST(listnode, all)
+{
+    listnode* test_list = NULL;
+
+    push_back(&test_list, 1);
+    push_back(&test_list, 2);
+
+    unsigned int result = pop(&test_list);
+    unsigned int expected = 1;
+    ASSERT_EQUAL_U(expected, result);
+
+    result = pop(&test_list);
+    expected = 2;
+    ASSERT_EQUAL_U(expected, result);
 }
